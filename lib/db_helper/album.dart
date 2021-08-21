@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alpha/page/slide_image.dart';
+import 'package:alpha/utils/user_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<AlbumSlide>> fetchAlbum() async {
@@ -18,9 +19,33 @@ Future<List<AlbumSlide>> fetchAlbum() async {
     return data
         .map((spacecraft) => new AlbumSlide.fromJSON(spacecraft))
         .toList();
-
   } else {
     throw Exception('We were not able to successfully download the json data.');
+  }
+}
+
+var imagePath, id;
+
+Future fetchUser() async {
+  var _user = await UserSecureStorage.getUsername();
+
+  var url = Uri.parse(
+      'http://192.168.43.113/android/pegawai/fetch_user.php?id=$_user');
+
+  final response = await http.get(url);
+
+  // final resp = await http.post(
+  //   url,
+  //   body: {'id': id},
+  // );
+
+  if (response.statusCode == 200) {
+    List data = jsonDecode(response.body);
+    print('tipe data json ${data[0]['avatar']}');
+
+    imagePath = data[0]['avatar'];
+
+    return imagePath;
   }
 }
 

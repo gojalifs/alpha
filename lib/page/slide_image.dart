@@ -10,4 +10,4 @@ class AlbumSlide {
   }
 }
 
-// var listAlbum = [];
+var listAlbum = ['images/slideshow/slide1.png', 'assets/images/slideshow/slide2.png'];

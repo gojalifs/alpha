@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     fetchAlbum();
+    fetchUser();
   }
 
   @override
@@ -37,6 +38,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("YMMI Connect"),
+        actions: [
+          FutureBuilder(
+            future: fetchUser(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      'http://192.168.43.113/android/pegawai/${imagePath}'),
+                );
+              }
+              return Text('error');
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -85,7 +100,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           children: [
-            _buildImageSlideshow(),
+            // _buildImageSlideshow(),
             FutureBuilder<List<AlbumSlide>>(
               future: fetchAlbum(),
               builder: (context, snapshot) {
@@ -108,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               color: Theme.of(context).accentColor,
               onPressed: () {
                 print('widgetnya $AlbumSlide');
-                fetchAlbum();
+                fetchUser();
               },
               child: Text(
                 'Get Images',
@@ -128,9 +143,18 @@ class _HomePageState extends State<HomePage> {
       isLoop: true,
       children: [
         Icon(Icons.done),
-        Icon(Icons.done),
-        Icon(Icons.done),
-        Icon(Icons.done),
+        Icon(Icons.crop_square_sharp),
+        // Icon(Icons.done),
+        // Icon(Icons.done),
+        // ListView.builder(
+        //   itemCount: listAlbum.length,
+        //     itemBuilder: (context, index) {
+        //   return Column(
+        //     children: [
+        //       Image.asset(listAlbum[index]),
+        //     ],
+        //   );
+        // })
       ],
     );
   }
@@ -139,6 +163,17 @@ class _HomePageState extends State<HomePage> {
     UserSecureStorage.deleteUsername();
   }
 }
+
+// class GetUserAvatar extends StatelessWidget {
+//   const GetUserAvatar({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ClipRect(
+//       child: Image.network(albumSlide.imageUrl),
+//     );
+//   }
+// }
 
 _buildListTile(
     {required BuildContext context, required route, required String text}) {
