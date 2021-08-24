@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LaporAbsen extends StatefulWidget {
-  const LaporAbsen({Key? key}) : super(key: key);
+class presention extends StatefulWidget {
+  const presention({Key? key}) : super(key: key);
 
   @override
-  _LaporAbsenState createState() => _LaporAbsenState();
+  _presentionState createState() => _presentionState();
 }
 
-class _LaporAbsenState extends State<LaporAbsen> {
+class _presentionState extends State<presention> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

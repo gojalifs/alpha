@@ -121,14 +121,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future _doLogin() async {
     // untuk emulator
-    Uri url = Uri.parse('http://10.0.2.2/android/pegawai/login.php');
+    // Uri url = Uri.parse('http://10.0.2.2/android/pegawai/login.php');
 
     // untuk real device
-    // Uri url = Uri.parse('http://192.168.43.113/android/pegawai/login.php');
+    Uri url = Uri.parse('http://192.168.43.113/android/pegawai/login.php');
 
     final resp = await http.post(url, body: {
       "id": id,
-      "birth_date": birth,
+      "tgl_lahir": birth,
     });
 
     final data = jsonDecode(resp.body);

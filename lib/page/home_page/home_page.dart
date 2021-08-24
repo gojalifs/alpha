@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:alpha/page/absensi_portal.dart';
+import 'package:alpha/page/form_kaizen.dart';
+import 'package:alpha/page/portal/absensi_portal.dart';
 import 'package:alpha/page/diskusi.dart';
 import 'package:alpha/page/home_page/custom_album_view.dart';
 import 'package:alpha/page/konsultasi_hr.dart';
@@ -39,17 +40,21 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("YMMI Connect"),
         actions: [
-          FutureBuilder(
-            future: fetchUser(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'http://192.168.43.113/android/pegawai/${imagePath}'),
-                );
-              }
-              return Text('error');
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: FutureBuilder(
+              future: fetchUser(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return CircleAvatar(
+                    maxRadius: 25,
+                    backgroundImage: NetworkImage(
+                        'http://192.168.43.113/android/pegawai/$imagePath'),
+                  );
+                }
+                return Text('error');
+              },
+            ),
           ),
         ],
       ),
@@ -66,8 +71,8 @@ class _HomePageState extends State<HomePage> {
             _buildDivider(),
             _buildListTile(
                 context: context,
-                route: const LaporAbsen(),
-                text: 'Laporan Tidak Hadir'),
+                route: const presention(),
+                text: 'Detail Kehadiran'),
             _buildDivider(),
             _buildListTile(
                 context: context, route: const SlipGaji(), text: 'Slip Gaji'),
@@ -77,10 +82,13 @@ class _HomePageState extends State<HomePage> {
                 route: const Diskusi(),
                 text: 'Ruang Diskusi'),
             _buildDivider(),
+            _buildListTile(context: context, route: Kaizen(), text: "Form Kaizen"),
+            _buildDivider(),
             _buildListTile(
                 context: context,
                 route: const Konsultasi(),
                 text: 'Konsultasi HR'),
+
             Container(
               padding: const EdgeInsets.only(left: 50, right: 50),
               child: ElevatedButton(
@@ -97,40 +105,43 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            // _buildImageSlideshow(),
-            FutureBuilder<List<AlbumSlide>>(
-              future: fetchAlbum(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    List<AlbumSlide> _albumSlide = snapshot.data!;
-                    if (_albumSlide.length == 0) {
-                      return Text("Kosong");
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              // _buildImageSlideshow(),
+              FutureBuilder<List<AlbumSlide>>(
+                future: fetchAlbum(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      List<AlbumSlide> _albumSlide = snapshot.data!;
+                      if (_albumSlide.length == 0) {
+                        return Text("Kosong");
+                      } else {
+                        return CustomSlideShow(albumSlide: _albumSlide);
+                      }
                     } else {
-                      return CustomSlideShow(albumSlide: _albumSlide);
+                      return Text(snapshot.error.toString());
                     }
-                  } else {
-                    return Text(snapshot.error.toString());
                   }
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-            MaterialButton(
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                print('widgetnya $AlbumSlide');
-                fetchUser();
-              },
-              child: Text(
-                'Get Images',
-                style: TextStyle(color: Colors.white),
+                  return CircularProgressIndicator();
+                },
               ),
-            ),
-          ],
+              MaterialButton(
+                color: Theme.of(context).accentColor,
+                onPressed: () {
+                  print('widgetnya $AlbumSlide');
+                  // fetchUser();
+                  fetchAlbum();
+                },
+                child: Text(
+                  'Get Images',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
