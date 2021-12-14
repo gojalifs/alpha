@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:alpha/page/admin_page/admin_page.dart';
 import 'package:alpha/utils/user_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:alpha/utils/url.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -101,22 +104,53 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Admin?"),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AdminLogin();
+                      }));
+                    },
+                    child: Text("Klik Disini")),
+              ],
+            ),
           ],
         ),
       ),
     );
 
     return Scaffold(
-      body: Center(
-        child: Wrap(
-          children: [
-            Card(
-              child: _loginForm,
-            ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.deepPurple,
+              Colors.purple,
+            ],
+          ),
+        ),
+        child: Center(
+          child: Wrap(
+            children: [
+              Card(
+                child: _loginForm,
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _setFirstStatus() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    _pref.setBool('isSeen', true);
   }
 
   Future _doLogin() async {
@@ -124,9 +158,9 @@ class _LoginPageState extends State<LoginPage> {
     // Uri url = Uri.parse('http://10.0.2.2/android/pegawai/login.php');
 
     // untuk real device
-    Uri url = Uri.parse('http://192.168.43.113/android/pegawai/login.php');
+    // Uri url = Uri.parse('${url}login.php');
 
-    final resp = await http.post(url, body: {
+    final resp = await http.post(Uri.parse('${url}login.php'), body: {
       "id": id,
       "tgl_lahir": birth,
     });
@@ -137,7 +171,8 @@ class _LoginPageState extends State<LoginPage> {
     print("value status $value");
 
     if (value == 1) {
-      await UserSecureStorage.setUsername(jsonEncode(id));
+      await UserSecureStorage.setUsername(id);
+      _setFirstStatus();
 
       Navigator.pushReplacementNamed(context, '/home');
       ScaffoldMessenger.of(context)

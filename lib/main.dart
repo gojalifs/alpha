@@ -1,90 +1,73 @@
-import 'dart:io';
-
 import 'package:alpha/page/home_page/home_page.dart';
-import 'package:alpha/login_page.dart';
+import 'package:alpha/page/welcome/welcome_page.dart';
 import 'package:alpha/routes.dart';
-import 'package:alpha/utils/user_secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
-
-  ///delete it
-  HttpOverrides.global = new MyHttpOverrides();
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-  static const String _title = 'YMMI Connect';
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future<bool> _isSeen() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    bool _seen = _pref.getBool('isSeen') ?? false;
+    return _seen;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-      // Scaffold(
-      //   appBar: AppBar(
-      //     title: Text('New'),
-      //   ),
-      // ),
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      routes: routes,
+    return FutureBuilder(
+      future: _isSeen(),
+      builder: (context, snapshot) {
+        var seen = snapshot.data;
+        return MaterialApp(
+          title: "YMMI Connect",
+          routes: routes,
+          home: seen == true ? HomePage() : WelcomePage(),
+          theme: ThemeData(
+            primarySwatch: Colors.deepPurple,
+            backgroundColor: Colors.red,
+            fontFamily: 'poppins',
+          ),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('id', 'ID'),
+          ],
+        );
+      },
     );
   }
 }
 
-/// This is the stateful widget that the main application instantiates.
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-
-/// This is the private State class that goes with MyStatefulWidget.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-
-  MaterialApp mainAppBuilder(Widget widget) {
-    return MaterialApp(
-      home: widget,
-      routes: routes,
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        fontFamily: 'ubuntu',
+Container buildBg({required Widget child}) {
+  return Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          Color.fromRGBO(173, 70, 137, 1),
+          Color.fromRGBO(237, 92, 134, 1)
+        ],
       ),
-    );
-  }
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: Theme.of(context).textTheme.headline2!,
-      textAlign: TextAlign.center,
-      child: FutureBuilder(
-        future: user(), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            return mainAppBuilder(const HomePage());
-          } else {
-            return mainAppBuilder(const LoginPage());
-          }
-        },
-      ),
-    );
-  }
-}
-Future user() async {
-  final Future _user = UserSecureStorage.getUsername();
-  return _user;
+    ),
+  );
 }
 
-/// delete it
-class MyHttpOverrides extends HttpOverrides{
-  @override
-  HttpClient createHttpClient(SecurityContext? context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-  }
+Color builBgColor() {
+  return Color(10);
 }

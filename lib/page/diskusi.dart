@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Diskusi extends StatefulWidget {
-  const Diskusi({Key? key}) : super(key: key);
+class DiscussionPage extends StatefulWidget {
+  const DiscussionPage({Key? key}) : super(key: key);
 
   @override
-  _DiskusiState createState() => _DiskusiState();
+  _DiscussionPageState createState() => _DiscussionPageState();
 }
 
-class _DiskusiState extends State<Diskusi> {
+class _DiscussionPageState extends State<DiscussionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +15,8 @@ class _DiskusiState extends State<Diskusi> {
         title: Text('Obrolan Grup'),
       ),
       body: Center(
-        child: Text('Halaman Grup'),
+        // child: Text('Halaman Grup'),
+        child: Image.asset('images/UnderConstruct.jpg'),
       ),
     );
   }
