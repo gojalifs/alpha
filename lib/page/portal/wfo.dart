@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:alpha/db_helper/album.dart';
 import 'package:alpha/utils/url.dart';
 import 'package:alpha/page/portal/kehadiran_karyawan.dart';
@@ -30,17 +28,6 @@ class _WFOState extends State<WFO> {
 
   List<CheckBoxCondition> _checkList = CheckBoxCondition.getCOnditions();
   List _conditions = [];
-
-  Color _fgColor = Colors.green;
-  Color _bgColor = Colors.red;
-
-  bool _changeColor = true;
-
-  _isColorChange() {
-    setState(() {
-      _changeColor = !_changeColor;
-    });
-  }
 
   /// radio button
   String _kondisi = 'Sehat';

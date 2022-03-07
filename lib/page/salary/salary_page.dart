@@ -5,11 +5,8 @@ import 'package:alpha/utils/url.dart';
 import 'package:alpha/page/dropdown_month.dart';
 import 'package:alpha/page/salary/salary_model.dart';
 import 'package:alpha/utils/user_secure_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
@@ -24,7 +21,6 @@ class _SalaryPageState extends State<SalaryPage> {
   List<SalarySlipModel> _tableColumn = [];
 
   var formatCurrency = NumberFormat.simpleCurrency(name: "");
-  String _month = 'Pilih Periode';
   String? _selectedMonth,
       _selectedYear,
       _selectedMonthMMM = DateTime.now().month.toString();
@@ -136,7 +132,6 @@ class _SalaryPageState extends State<SalaryPage> {
                             formatDate(value!);
                             setState(
                               () {
-                                _month = _selectedMonth.toString();
                                 getSalaryData().then((value) {
                                   setState(() {
                                     _tableColumn = value;
@@ -399,10 +394,10 @@ class _SalaryPageState extends State<SalaryPage> {
                                             (e) {
                                               var outcome = [
                                                 e.assurance,
-                                                e.JHT,
-                                                e.JP,
-                                                e.BPJSMedic,
-                                                e.SPSI,
+                                                e.jht,
+                                                e.jp,
+                                                e.bpjsMedic,
+                                                e.spsi,
                                                 e.lunchReduction,
                                                 e.otherReduction
                                               ].reduce((value, element) =>
@@ -424,20 +419,20 @@ class _SalaryPageState extends State<SalaryPage> {
                                                     _salaryDataCont(
                                                         label: "BPJS-TK JHT",
                                                         detail: formatCurrency
-                                                            .format(e.JHT)),
+                                                            .format(e.jht)),
                                                     _salaryDataCont(
                                                         label: "BPJS-TK JP",
                                                         detail: formatCurrency
-                                                            .format(e.JP)),
+                                                            .format(e.jp)),
                                                     _salaryDataCont(
                                                         label: "BPJS Kesehatan",
                                                         detail: formatCurrency
                                                             .format(
-                                                                e.BPJSMedic)),
+                                                                e.bpjsMedic)),
                                                     _salaryDataCont(
                                                         label: "SPSI",
                                                         detail: formatCurrency
-                                                            .format(e.SPSI)),
+                                                            .format(e.spsi)),
                                                     _salaryDataCont(
                                                         label: "Makan",
                                                         detail: formatCurrency
@@ -642,7 +637,7 @@ class _SalaryPageState extends State<SalaryPage> {
 
     // var resp = await http.get(Uri.parse('${url}get_gaji.php?id=$_user'));
     var resp = await http.get(Uri.parse(
-        '${url}get_gaji.php?id=$_user&month=${_selectedMonth}&year=${_selectedYear}'));
+        '${url}get_gaji.php?id=$_user&month=$_selectedMonth&year=$_selectedYear'));
 
     if (resp.statusCode == 200) {
       // try {

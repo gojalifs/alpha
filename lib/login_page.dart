@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (value == null || value.isEmpty) {
                   return 'Please Enter Your ID';
                 }
+                return null;
               },
               decoration: InputDecoration(
                 labelText: "ID",
@@ -68,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (value == null || value.isEmpty) {
                   return 'Please Enter Your Birth';
                 }
+                return null;
               },
               decoration: InputDecoration(
                 suffixText: 'YYMMDD',

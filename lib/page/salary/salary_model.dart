@@ -14,10 +14,10 @@ class SalarySlipModel {
   int overtime;
   int otherBenefit;
   int assurance;
-  int JHT;
-  int JP;
-  int BPJSMedic;
-  int SPSI;
+  int jht;
+  int jp;
+  int bpjsMedic;
+  int spsi;
   int lunchReduction;
   int otherReduction;
 
@@ -37,10 +37,10 @@ class SalarySlipModel {
       required this.overtime,
       required this.otherBenefit,
       required this.assurance,
-      required this.JHT,
-      required this.JP,
-      required this.BPJSMedic,
-      required this.SPSI,
+      required this.jht,
+      required this.jp,
+      required this.bpjsMedic,
+      required this.spsi,
       required this.lunchReduction,
       required this.otherReduction});
 
@@ -61,10 +61,10 @@ class SalarySlipModel {
         overtime: int.parse(jsonData['lembur']),
         otherBenefit: int.parse(jsonData['lain']),
         assurance: int.parse(jsonData['asuransi']),
-        JHT: int.parse(jsonData['jht']),
-        JP: int.parse(jsonData['jp']),
-        BPJSMedic: int.parse(jsonData['medic']),
-        SPSI: int.parse(jsonData['spsi']),
+        jht: int.parse(jsonData['jht']),
+        jp: int.parse(jsonData['jp']),
+        bpjsMedic: int.parse(jsonData['medic']),
+        spsi: int.parse(jsonData['spsi']),
         lunchReduction: int.parse(jsonData['p_makan']),
         otherReduction: int.parse(jsonData['p_lain']),
       );

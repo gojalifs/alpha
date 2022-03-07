@@ -1,12 +1,8 @@
 import 'package:alpha/login_page.dart';
-import 'package:alpha/main.dart';
 import 'package:alpha/page/home_page/home_page.dart';
 import 'package:alpha/routes.dart';
 import 'package:alpha/utils/user_secure_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firstlaunch.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);

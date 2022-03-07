@@ -11,7 +11,6 @@ import 'package:alpha/page/slide_image.dart';
 import 'package:alpha/page/user/user_page.dart';
 import 'package:alpha/utils/notification.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -299,25 +298,21 @@ class _HomePageState extends State<HomePage> {
                             switch (index) {
                               case 0:
                                 return AbsensiPortal();
-                                break;
+
                               case 1:
                                 return PresentionPage();
-                                break;
+
                               case 2:
                                 return SalaryPage();
-                                break;
+
                               case 3:
                                 return DiscussionPage();
-                                break;
                               case 4:
                                 return KaizenFormPage();
-                                break;
                               case 5:
                                 return ConsultationPage();
-                                break;
                               default:
                                 return PaidLeavePage();
-                                break;
                             }
                           },
                         ),

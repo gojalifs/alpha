@@ -4,11 +4,8 @@ import 'package:alpha/db_helper/album.dart';
 import 'package:alpha/page/portal/absen.dart';
 import 'package:alpha/page/portal/wfo.dart';
 import 'package:alpha/utils/url.dart';
-import 'package:alpha/utils/user_secure_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class AbsensiPortal extends StatefulWidget {
   // const AbsensiPortal({Key? key}) : super(key: key);
@@ -18,22 +15,14 @@ class AbsensiPortal extends StatefulWidget {
 }
 
 class _AbsensiPortalState extends State<AbsensiPortal> {
-  final _formWFOKey = GlobalKey<FormState>();
   WFO _wfo = WFO();
   Absence _absence = Absence();
 
   int showFormIndex = 0;
 
-  List<CheckBoxCondition> _checkList = CheckBoxCondition.getCOnditions();
-  List _conditions = [];
-
   Color _fgColor = Colors.white;
   Color _bgColor = Colors.green;
 
-  bool _changeColor = true;
-
-  /// radio button
-  String _kondisi = 'Sehat';
   bool _bergejala = false;
 
   int _rvaluegroup = -1;
@@ -63,7 +52,7 @@ class _AbsensiPortalState extends State<AbsensiPortal> {
   void initState() {
     super.initState();
     _checkPortalStatus();
-    print("already ${isUpdated}");
+    print("already $isUpdated");
   }
 
   Future _future = _checkPortalStatus();
@@ -184,7 +173,6 @@ class _AbsensiPortalState extends State<AbsensiPortal> {
               onChanged: (int? value) {
                 setState(() {
                   _rvaluegroup = value!;
-                  _kondisi = _condition.text;
                   _condition.index == 1
                       ? _bergejala = false
                       : _bergejala = true;

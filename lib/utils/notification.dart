@@ -3,7 +3,6 @@ import 'package:rxdart/subjects.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-///TODO
 class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String?>();
@@ -48,10 +47,21 @@ class NotificationApi {
 
   static Future notificationDetails() async {
     return NotificationDetails(
-        android: AndroidNotificationDetails(
-            'channelId', 'channelName', 'channelDescription',
-            importance: Importance.max),
-        iOS: IOSNotificationDetails());
+      android: AndroidNotificationDetails(
+        'channel id',
+        'channel name',
+        channelDescription: 'channel description',
+        importance: Importance.max,
+        priority: Priority.max,
+        ticker: 'ticker',
+      ),
+      iOS: IOSNotificationDetails(),
+    );
+    // return NotificationDetails(
+    //     android: AndroidNotificationDetails(
+    //         'channelId', 'channelName', 'channelDescription',
+    //         importance: Importance.max),
+    //     iOS: IOSNotificationDetails());
   }
 
   static Future init({bool initSchedule = false}) async {

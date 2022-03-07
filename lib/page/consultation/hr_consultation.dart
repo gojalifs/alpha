@@ -60,6 +60,7 @@ class _ConsultationPageState extends State<ConsultationPage> {
                       if (value == null || value.isEmpty) {
                         return "Mohon ketikkan sesuatu tentang masalah anda";
                       }
+                      return null;
                     },
                     onChanged: (value) {
                       _problem = value;
@@ -67,7 +68,7 @@ class _ConsultationPageState extends State<ConsultationPage> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      /// TODO validate first
+                      /// validate first
                       if (_formKey.currentState != null) {
                         if (_formKey.currentState!.validate()) {
                           _sendConsultationData(_problem);

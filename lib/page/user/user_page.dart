@@ -20,21 +20,20 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   List<UserDataModel> _userData = [];
-  UserDataModel _userDataModel = UserDataModel();
   Map<String, dynamic> _userDataMap = {};
-  List _detailList = [
-    'ID',
-    'Nama',
-    'Status Karyawan',
-    'Departemen',
-    'Sub Departemen',
-    'Gaji Pokok',
-    'Tanggal Join',
-    'No. Hp',
-    'Tanggal Lahir',
-    'Jenis Kelamin',
-    'Alamat',
-  ];
+  // List _detailList = [
+  //   'ID',
+  //   'Nama',
+  //   'Status Karyawan',
+  //   'Departemen',
+  //   'Sub Departemen',
+  //   'Gaji Pokok',
+  //   'Tanggal Join',
+  //   'No. Hp',
+  //   'Tanggal Lahir',
+  //   'Jenis Kelamin',
+  //   'Alamat',
+  // ];
 
   @override
   void initState() {

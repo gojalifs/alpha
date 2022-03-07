@@ -6,7 +6,6 @@ import 'package:alpha/utils/url.dart';
 import 'package:alpha/page/laporan_absensi/detail_model.dart';
 import 'package:alpha/utils/user_secure_storage.dart';
 import 'package:alpha/page/dropdown_month.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
@@ -336,9 +335,9 @@ class _PresentionPageState extends State<PresentionPage> {
     var file = await DefaultCacheManager()
         .getSingleFile('${url}detail_kehadiran.php?id=$_user');
 
-    var file2 = DefaultCacheManager().getFileStream(
-        '${url}detail_kehadiran.php?id=$_user',
-        withProgress: true);
+    // var file2 = DefaultCacheManager().getFileStream(
+    //     '${url}detail_kehadiran.php?id=$_user',
+    //     withProgress: true);
     // var data2 = jsonDecode(file2);
     // print('hasilnya ${http.Response.fromStream(file2)}');
 
